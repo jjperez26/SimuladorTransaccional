@@ -1,8 +1,8 @@
 const { Router } = require('express')
-const { user } = require('../handlers/crearUsuario')
+const { user } = require('../handlers/users')
 
-const user = Router()
+const users = Router()
 
-user.post('/crearUsuario', user)
+users.post('/crearUsuario', user)
 
-module.exports = { user }
+module.exports = { users }
