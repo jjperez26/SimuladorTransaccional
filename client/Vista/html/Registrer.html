@@ -15,7 +15,7 @@
     <body class="bg-info d-flex justify-content-center align-items-center">
         <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 35rem">
             <h1>Registro de Usuario</h1>
-            <form action="?" method="post">
+            <form action="./login.html" method="GET">
                 <div class="mb-4">
                 <label for="nombre" class="form-label">Nombres</label>
                     <input type="text" class="form-control bg-light" id="nombre"
@@ -39,7 +39,7 @@
                 <div class="mb-4">
                     <label for="numeroDocumento" class="form-label">Número de
                         documento</label>
-                    <input type="text" class="form-control bg-light" id="numeroDocumento"
+                    <input type="text" inputmode="numeric" pattern="\d*" class="form-control bg-light" id="numeroDocumento"
                         name="numeroDocumento" required/>
                 </div>
                 <div class="mb-4">
@@ -53,44 +53,11 @@
                     <input type="email" class="form-control bg-light" id="correo"
                         name="correo" required>
                 </div>
-                <button onclick="registro
-                ()" class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm">Crear Usuario</button>
+                <button class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm">Crear Usuario</button>
             </form>
             <div class="d-flex gap-1 justify-content-center mt-1">
                 <a href="./login.html" class="text-decoration-none text-info fw-semibold">Cancelar</a>
             </div>
         </div>
     </body>
-
-    <script>
-        function registro(){
-            const nombres = document.getElementById("nombre").value
-            const apellidos = document.getElementById("apellido").value
-            const tipoDocumento = document.getElementById("tipoDocumento").value
-            const numeroDocumento = document.getElementById("numeroDocumento").value
-            const numeroCelular = document.getElementById("numeroCelular").value
-            const correo = document.getElementById("correo").value
-
-            const formData={
-                nombres : nombres,
-                apellidos : apellidos,
-                tipoDocumento : tipoDocumento,
-                numeroDocumento : numeroDocumento,
-                numeroCelular : numeroCelular,
-                correo : correo
-            }   
-        
-        fetch('http://localhost:3001', 
-            {
-                method: 'POST',
-                body: formData
-            })
-            .then(res => {
-                console.log(" Correcto ", res)  
-                console.log(formData)
-            })
-            .catch(err => console.log('error', err))
-        }
-
-    </script>
 </html>
