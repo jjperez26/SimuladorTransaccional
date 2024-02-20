@@ -1,5 +1,5 @@
 const express = require('express');
-//const router = require('./routes/index')
+const router = require('./routes/index.js')
 const morgan = require('morgan');
 
 const server = express();
@@ -7,7 +7,7 @@ const server = express();
 server.use(morgan('dev'))
 server.use(express.json())
 
-//server.use(router)
+server.use(router)
 
 
 
