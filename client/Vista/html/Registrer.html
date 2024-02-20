@@ -53,11 +53,44 @@
                     <input type="email" class="form-control bg-light" id="correo"
                         name="correo" required>
                 </div>
-                <button class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm">Crear Usuario</button>
+                <button onclick="registro
+                ()" class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm">Crear Usuario</button>
             </form>
             <div class="d-flex gap-1 justify-content-center mt-1">
                 <a href="./login.html" class="text-decoration-none text-info fw-semibold">Cancelar</a>
             </div>
         </div>
     </body>
+
+    <script>
+        function registro(){
+            const nombres = document.getElementById("nombre").value
+            const apellidos = document.getElementById("apellido").value
+            const tipoDocumento = document.getElementById("tipoDocumento").value
+            const numeroDocumento = document.getElementById("numeroDocumento").value
+            const numeroCelular = document.getElementById("numeroCelular").value
+            const correo = document.getElementById("correo").value
+
+            const formData={
+                nombres : nombres,
+                apellidos : apellidos,
+                tipoDocumento : tipoDocumento,
+                numeroDocumento : numeroDocumento,
+                numeroCelular : numeroCelular,
+                correo : correo
+            }   
+        
+        fetch('http://localhost:3001', 
+            {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => {
+                console.log(" Correcto ", res)  
+                console.log(formData)
+            })
+            .catch(err => console.log('error', err))
+        }
+
+    </script>
 </html>
