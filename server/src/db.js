@@ -17,9 +17,12 @@ modelUser(sequelize)
 modeltipoIdentificacion(sequelize)
 modelTransaccion(sequelize)
 
+const { usuarios, tipos_documentos, transacciones } = sequelize.models
+usuarios.belongsTo(tipos_documentos, { foreignKey: 'TIPO_DOCUMENTO' })
+tipos_documentos.hasOne(usuarios)
 
 
 module.exports = {
-   ...sequelize.models, 
+   ...sequelize.models,
    conn: sequelize,
 };

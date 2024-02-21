@@ -3,9 +3,10 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
     // defino el modelo
-    sequelize.define('transaccione', {
+    sequelize.define('transacciones', {
         ID_TRANSACCION: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
             allowNull: false,
             unique: true
@@ -20,10 +21,6 @@ module.exports = (sequelize) => {
         },
         VALOR_TRANSACCION: {
             type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        PASSWORD: {
-            type: DataTypes.STRING(30),
             allowNull: false
         },
         FECHA_TRANSACCION: {

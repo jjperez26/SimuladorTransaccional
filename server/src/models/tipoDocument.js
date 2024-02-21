@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
     // defino el modelo
     sequelize.define('tipos_documentos', {
         ID_TP_DOCUMENTO: {
-            type: DataTypes.INTEGER(160),
+            type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: false,
             unique: true

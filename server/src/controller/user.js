@@ -1,21 +1,21 @@
-const axios = require('axios')
-//const { pokemon, type } = require('../db')
-const { Op } = require('sequelize')
+const { usuarios } = require('../db')
 
-const crearUsuario = async (nombreCompleto, numeroDocumento, celular, correoElectronico,
-    contraseña, direccion, saldo, numeroCuenta, habilitada, perfil) => {
-    const newUser = await user.create({
-        nombreCompleto: nombreCompleto,
-        numeroDocumento: numeroDocumento,
-        celular: celular,
-        correoElectronico: correoElectronico,
-        contraseña: contraseña,
-        direccion: direccion,
-        saldo: saldo,
-        numeroCuenta: numeroCuenta,
-        habilitada: habilitada,
-        perfil: perfil
+const crearUsuario = async (NOMBRE_USUARIO, DOCUMENTO, TIPO_DOCUMENTO, NUMERO_CELULAR,
+    CORREO, PASSWORD, DIRECCION, SALDO, ESTADO_CUENTA, PERFIL) => {
+    const newUser = await usuarios.create({
+        NOMBRE_USUARIO: NOMBRE_USUARIO,
+        DOCUMENTO: DOCUMENTO,
+        TIPO_DOCUMENTO: TIPO_DOCUMENTO,
+        NUMERO_CELULAR: NUMERO_CELULAR,
+        CORREO: CORREO,
+        PASSWORD: PASSWORD,
+        DIRECCION: DIRECCION,
+        SALDO: SALDO,
+        ESTADO_CUENTA: ESTADO_CUENTA,
+        PERFIL: PERFIL
     })
+
+    return newUser
 }
 
 module.exports = { crearUsuario }
