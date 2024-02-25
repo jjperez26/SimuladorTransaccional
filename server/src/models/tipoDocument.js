@@ -8,7 +8,8 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: false,
-            unique: true
+            unique: true,
+            autoIncrement: true
         },
         NOMBRE_TP_DOCUMENTO: {
             type: DataTypes.STRING(10),
