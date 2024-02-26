@@ -31,8 +31,8 @@
                     documento</label>
                 <select class="form-select bg-light" id="tipoDocumento" name="tipoDocumento" required>
                     <option value>Seleccione...</option>
-                    <option value="cedula">Cédula</option>
-                    <option value="pasaporte">Pasaporte</option>
+                    <option value="1">Cédula</option>
+                    <option value="2">Tarjeta Identidad</option>
                 </select>
             </div>
             <div class="mb-4">
@@ -70,13 +70,22 @@
                     Perfil</label>
                 <select class="form-select bg-light" id="tipoPerfil" name="tipoPerfil" required>
                     <option value>Seleccione...</option>
-                    <option value="Administrador">Administrador</option>
-                    <option value="Cliente">Cliente</option>
+                    <option value="Admin">Administrador</option>
+                    <option value="Usuario">Cliente</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="Estadocuenta" class="form-label">Estado cuenta</label>
+                <select class="form-select bg-light" id="Estadocuenta" name="Estadocuenta" required>
+                    <option value>Seleccione...</option>
+                    <option value="true">Activo</option>
+                    <option value="false">Inactivo</option>
                 </select>
             </div>
 
 
-            <button onclick="registro()" class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm">Crear
+            <button onclick="registro(event)" class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm">Crear
                 Usuario</button>
         </form>
         <div class="d-flex gap-1 justify-content-center mt-1">
@@ -86,7 +95,8 @@
 </body>
 
 <script>
-    function registro() {
+    function registro(event) {
+        event.preventDefault();
         var nombre = document.getElementById("nombre").value
         var tipoDocumento = document.getElementById("tipoDocumento").value
         var numeroDocumento = document.getElementById("numeroDocumento").value
@@ -96,50 +106,43 @@
         var direccion = document.getElementById("direccion").value
         var saldo = document.getElementById("saldo").value
         var tipoPerfil = document.getElementById("tipoPerfil").value
+        var Estadocuenta = document.getElementById("Estadocuenta").value
 
-        toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
+
 
         if (nombre.length < 1) {
             toastr.error("Debe llenar todos los campos para registrarse");
         }
 
-        // const formData={
-        //     nombres : nombre,
-        //     tipoDocumento : tipoDocumento,
-        //     numeroDocumento : numeroDocumento,
-        //     numeroCelular : numeroCelular,
-        //     correo : correo,
-        //     rcontraseña : rcontraseña,
-        //     direccion : direccion,
-        //     saldo : saldo,
-        //     tipoPerfil : tipoPerfil
-        // }   
+        const formData={
+             NOMBRE_USUARIO : nombre,
+			 DOCUMENTO : numeroDocumento,
+             TIPO_DOCUMENTO : tipoDocumento,
+			 NUMERO_CELULAR : numeroCelular,
+			 CORREO : correo,
+             PASSWORD : rcontraseña,
+             DIRECCION : direccion,
+             SALDO : saldo,
+             ESTADO_CUENTA : Estadocuenta,
+             PERFIL : tipoPerfil
 
-        // fetch('http://localhost:3001', 
-        //     {
-        //         method: 'POST',
-        //         body: formData
-        //     })
-        //     .then(res => {
-        //         console.log(" Correcto ", res)  
-        //     })
-        //     .catch(err => console.log(formData, err))
+         }   
+
+         fetch('http://localhost:3001/user/crearUsuario', 
+         {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
+        console.log("Respuesta exitosa", data);
+        })
+             .catch(err => console.log(formData, err))
     }
 
 </script>

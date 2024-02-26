@@ -19,7 +19,7 @@
                     <div class="input-group-text bg-info">
                         <img src="../image/username-icon.svg" alt="username-icon" style="height: 1rem" />
                     </div>
-                    <input class="form-control bg-light" id="username" type="text" placeholder="Username" required/>
+                    <input class="form-control bg-light" id="numerocelular" type="text" placeholder="Número celular" required/>
                 </div>
                 <div class="input-group mt-1">
                     <div class="input-group-text bg-info">
@@ -38,22 +38,30 @@
         </div>
     </body>
     <script>
-        function ingresar(){
-            const username = document.getElementById("username").value
-            const contrasena = document.getElementById("contrasena").value
-            const formData={
-                username : username,
-                contrasena: contrasena
-            }         
-            fetch('http://localhost:3001', 
-            {
-                method: 'POST',
-                body: formData
-            })
-            .then(res => {
-                console.log("dsdsd ", res)  
-            })
-            .catch(err => console.log('error', err))
-        } 
+        function ingresar() {
+    const numerocelular = document.getElementById("numerocelular").value;
+    const contrasena = document.getElementById("contrasena").value;
+    const formData = {
+        NUMERO_CELULAR: numerocelular,
+        PASSWORD: contrasena
+    };
+
+    fetch('http://localhost:3001/user/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
+            if(data.VALOR!==true){alert('Usuario incorrecto')}
+        console.log("Respuesta exitosa", data);
+        })
+        .catch(err => console.log('Error', err));
+}
+
     </script>
 </html>
