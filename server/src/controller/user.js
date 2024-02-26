@@ -24,41 +24,59 @@ const loginController = async (NUMERO_CELULAR, PASSWORD) => {
         where: {
             NUMERO_CELULAR: NUMERO_CELULAR
         },
-        attributes: ['PASSWORD', 'PERFIL']
+        attributes: ['PASSWORD', 'PERFIL', 'ESTADO_CUENTA']
     });
     if (!usuario) {
         return {
             VALOR: false,
-            PERFIL: false
+            PERFIL: false,
+            ESTADO_CUENTA: 'Numero de celular no encontrado'
         };
     }
     if (usuario.PASSWORD === PASSWORD) {
         return {
             VALOR: true,
-            PERFIL: usuario.PERFIL
+            PERFIL: usuario.PERFIL,
+            ESTADO_CUENTA: usuario.ESTADO_CUENTA
         };
     } else {
         return {
             VALOR: false,
-            PERFIL: false
+            PERFIL: false,
+            ESTADO_CUENTA: usuario.ESTADO_CUENTA
         };
     }
 };
 
-const usersListController = async () => { 
+const usersListController = async () => {
     const users = await usuarios.findAll({
-        attributes: ['NOMBRE_USUARIO', 'SALDO', 'ESTADO_CUENTA']
+        attributes: ['NOMBRE_USUARIO', 'NUMERO_CELULAR', 'SALDO', 'ESTADO_CUENTA']
     })
 
+    const userList = users.map(user => ({
+        NOMBRE_USUARIO: user.NOMBRE_USUARIO,
+        NUMERO_CELULAR: user.NUMERO_CELULAR,
+        SALDO: user.SALDO,
+        ESTADO_CUENTA: user.ESTADO_CUENTA
+    }));
+
+    return userList
+}
+
+const editUserController = async (NUMERO_CELULAR, ESTADO_CUENTA) => {
+    const user = await usuarios.findOne({ where: { NUMERO_CELULAR } });
+    await user.update({ ESTADO_CUENTA });
     return {
-        NOMBRE_USUARIO: users.NOMBRE_USUARIO,
-        SALDO: users.SALDO,
-        ESTADO_CUENTA: users.ESTADO_CUENTA
-    }
+        NOMBRE_USUARIO: user.NOMBRE_USUARIO,
+        NUMERO_CELULAR: user.NUMERO_CELULAR,
+        SALDO: user.SALDO,
+        ESTADO_CUENTA: ESTADO_CUENTA
+    };
 }
 
 module.exports = {
     crearUsuario,
-    loginController, 
-    usersListController
+    loginController,
+    usersListController,
+    editUserController
 }
