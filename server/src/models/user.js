@@ -20,7 +20,8 @@ module.exports = (sequelize) => {
         },
         NUMERO_CELULAR: {
             type: DataTypes.STRING(10),
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
         CORREO: {
             type: DataTypes.STRING(50),

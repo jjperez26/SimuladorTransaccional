@@ -39,6 +39,9 @@ modelTransaccion(sequelize)
 
 const { usuarios, tipos_documentos, transacciones } = sequelize.models
 usuarios.belongsTo(tipos_documentos, { foreignKey: 'TIPO_DOCUMENTO' })
+transacciones.belongsTo(usuarios, { foreignKey: 'CUENTA_ORIGEN', targetKey: 'NUMERO_CELULAR' });
+transacciones.belongsTo(usuarios, { foreignKey: 'CUENTA_DESTINO', targetKey: 'NUMERO_CELULAR' });
+
 
 
 module.exports = {

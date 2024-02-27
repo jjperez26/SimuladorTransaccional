@@ -12,11 +12,11 @@ module.exports = (sequelize) => {
             unique: true
         },
         CUENTA_ORIGEN: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING(10),
             allowNull: false
         },
         CUENTA_DESTINO: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING(10),
             allowNull: false
         },
         VALOR_TRANSACCION: {
