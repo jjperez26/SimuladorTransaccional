@@ -39,9 +39,9 @@
     </body>
     <script>
         function ingresar() {
-    const numerocelular = document.getElementById("numerocelular").value;
-    const contrasena = document.getElementById("contrasena").value;
-    const formData = {
+        const numerocelular = document.getElementById("numerocelular").value;
+        const contrasena = document.getElementById("contrasena").value;
+        const formData = {
         NUMERO_CELULAR: numerocelular,
         PASSWORD: contrasena
     };
@@ -58,7 +58,11 @@
         })
         .then(data => {
             if(data.VALOR!==true){alert('Usuario incorrecto')}
-        console.log("Respuesta exitosa", data);
+            else{
+                localStorage.setItem("usuario",numerocelular )
+                window.open('file:///C:/Users/USUARIO/Documents/Universidad/Noveno%20Semestre/Auditoria/1/Proyecto/SimuladorTransaccional/client/Vista/html/home.html?telefono='+numerocelular,"_self") 
+            }
+            console.log("Respuesta exitosa", data);
         })
         .catch(err => console.log('Error', err));
 }

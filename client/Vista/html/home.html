@@ -15,11 +15,13 @@
                     <a href="./home.html" class=""><img src="../image/login-icon.svg" alt="login-icon" style="height: 3rem"/></a>
                 </div>
                 <div class="d-inline-block text-info gap-1 justify-content-center mt-4" style="font-size: 3rch; width: 3rem; height: 5rem;">Usuario</div>
-                <div class="d-inline-block gap-1 justify-content-center mt-4" style="font-size: 3rch;">Juanito Alimaña</div>
+                <div class="d-inline-block gap-1 justify-content-center mt-4" style="font-size: 3rch;">
+               <p id="nombre"></p> 
+                </div>
             </div>
             <div class="d-flex gap-2 justify-content-center mt-1" style="height: 5rem;">
-                <div class="d-inline-block gap-1 justify-content-center mt-4" style="font-size: 4rch;">Saldo $</div>
-                <div class="mt-4" style="font-size: 4rch;">13'452,030.00</div>
+                <div class="d-inline-block gap-1 justify-content-center mt-4" style="font-size: 4rch;">Saldo $></p></div>
+                <div class="mt-4" style="font-size: 4rch;" id="saldo"></div>
             </div>
             <div class="d-flex gap-4 justify-content-lg-end mt-2">
                 <div class="d-flex gap-1 justify-content-center mt-4">
@@ -34,4 +36,30 @@
             </div>
         </div>
     </body>
+    <script>
+        var numeroTelefonico =window.location.search.split("=")[1];
+        const formData = {
+        };
+            
+        fetch('http://localhost:3001/users', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                document.getElementById("nombre").innerHTML="data" 
+                document.getElementById("saldo").innerHTML="data" 
+                console.log("Respuesta exitosa", data);
+            })
+            .catch(err => console.log('Error', err));
+
+        function ingresar() {
+        }
+        
+    </script>
 </html>

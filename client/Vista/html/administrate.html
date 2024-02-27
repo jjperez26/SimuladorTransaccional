@@ -14,16 +14,7 @@
     </head>
     <body
         class="bg-info d-flex justify-content-center align-items-center vh-100">
-        <script>
-            let users = [
-                {id: 1, name: "John", email:"John@hotmail.com", user: 3202757872, status:true},
-                {id: 2, name: "Pete", email:"Pete@hotmail.com", user: 3212852814, status:false},
-                {id: 3, name: "Mary", email:"Mary@hotmail.com", user: 3222937838, status:true},
-                {id: 4, name: "Liam", email:"Liam@hotmail.com", user: 3236057851, status:true},
-                {id: 5, name: "Juan", email:"Juan@hotmail.com", user: 3212947630, status:false}
-                ];
-            console.log(users)
-        </script>
+
         <div class="bg-white p-5 rounded-5 text-secondary shadow"
             style="width: 50rem">
             <div class="text-center fs-5 fw-bold">Simulador de transacciones ||
@@ -39,8 +30,8 @@
                             <th scope="col">ENABLE || DISABLE</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody id="usuarios">
+                        <!-- <tr>
                             <th scope="row">1</th>
                             <td>Mark</td>
                             <td>Otto@mdo</td>
@@ -51,7 +42,7 @@
                                 <a href="./login.html"
                                     class="text-decoration-none btn btn-danger text-white fw-semibold">Disable</a>
                             </td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
                 <!-- <button class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm">Login</button> -->
@@ -63,4 +54,52 @@
             </div>
         </div>
     </body>
+    <script>
+            fetch('http://localhost:3001/user', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify()
+            })
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                console.log("Respuesta exitosa", data);
+                const users = [
+                ];
+                var contenedor = document.getElementById("usuarios");
+                // Crear una variable para almacenar el HTML generado
+                var html = "";
+                
+                // Recorrer el array y generar el HTML para cada elemento
+                for (var i = 0; i < data.length; i++) {
+                    // Agregar el elemento actual al HTML generado
+                    html +="<tr>"
+                    html += "<td></td>";
+                    html += "<td>" + data[i].NOMBRE_USUARIO + "</td>";
+                    html += "<td>" + data[i].NUMERO_CELULAR + "</td>";
+                    html += "<td>" + data[i].SALDO + "</td>";
+                    // html += "<td>" + users[i].status + "</td>";
+                    if(data[i].ESTADO_CUENTA){
+                        html += `<td><a class="text-decoration-none btn btn-info text-white fw-semibold" onclick="habilitar(`+data[i].NUMERO_CELULAR+`)">Enable</a></td>`
+                    }else{
+                        html +=`<td><a  class="text-decoration-none btn btn-danger text-white fw-semibold" onclick="deshabilitar(`+data[i].NUMERO_CELULAR+`)">Disable</a></td>`
+                    }
+                    html +="</tr>"       
+                }
+    
+                // Insertar el HTML generado en el contenedor
+                contenedor.innerHTML = html;
+            })
+            .catch(err => console.log('Error', err));
+
+            function habilitar(id){
+                console.log("id habilitar", id)
+            }
+            function deshabilitar(id){
+                console.log("desa ", id)
+            }
+    </script>
 </html>
