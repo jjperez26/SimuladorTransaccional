@@ -1,5 +1,4 @@
 const { usuarios } = require('../db');
-const user = require('../models/user');
 
 const crearUsuario = async (NOMBRE_USUARIO, DOCUMENTO, TIPO_DOCUMENTO, NUMERO_CELULAR,
     CORREO, PASSWORD, DIRECCION, SALDO, ESTADO_CUENTA, PERFIL) => {
@@ -24,7 +23,7 @@ const loginController = async (NUMERO_CELULAR, PASSWORD) => {
         where: {
             NUMERO_CELULAR: NUMERO_CELULAR
         },
-        attributes: ['PASSWORD', 'PERFIL', 'ESTADO_CUENTA']
+        attributes: ['PASSWORD', 'PERFIL', 'ESTADO_CUENTA', 'NOMBRE_USUARIO', 'SALDO']
     });
     if (!usuario) {
         return {
@@ -37,7 +36,9 @@ const loginController = async (NUMERO_CELULAR, PASSWORD) => {
         return {
             VALOR: true,
             PERFIL: usuario.PERFIL,
-            ESTADO_CUENTA: usuario.ESTADO_CUENTA
+            ESTADO_CUENTA: usuario.ESTADO_CUENTA,
+            NOMBRE_USUARIO: usuario.NOMBRE_USUARIO,
+            SALDO: usuario.SALDO
         };
     } else {
         return {
