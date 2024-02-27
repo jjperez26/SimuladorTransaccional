@@ -49,4 +49,24 @@
             </div>
         </div>
     </body>
+
+    <script>
+        var numeroTelefonico = window.location.search.split("=")[1];
+        
+        fetch(`http://localhost:3001/user?NUMERO_CELULAR=${numeroTelefonico}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json' 
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("nombre").innerText = data.NOMBRE_USUARIO;
+            document.getElementById("saldo").innerText = data.SALDO;
+            document.getElementById("numerocelular").innerText = data.NUMERO_CELULAR;
+            document.getElementById("estadocuenta").innerText = data.ESTADO_CUENTA;
+            console.log("Respuesta exitosa", data);
+        })
+        .catch(err => console.error('Error', err));
+    </script>
 </html>

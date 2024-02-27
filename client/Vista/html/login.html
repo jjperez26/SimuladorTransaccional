@@ -59,8 +59,13 @@
         .then(data => {
             if(data.VALOR!==true){alert('Usuario incorrecto')}
             else{
+                if(data.ESTADO_CUENTA===true){
                 localStorage.setItem("usuario",numerocelular )
-                window.open('file:///C:/Users/USUARIO/Documents/Universidad/Noveno%20Semestre/Auditoria/1/Proyecto/SimuladorTransaccional/client/Vista/html/home.html?telefono='+numerocelular,"_self") 
+                window.open('./home.html?telefono='+numerocelular,"_self")
+                }
+                else{
+                alert('Usuario Inactivo')
+                }
             }
             console.log("Respuesta exitosa", data);
         })

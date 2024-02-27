@@ -74,10 +74,20 @@ const editUserController = async (NUMERO_CELULAR, ESTADO_CUENTA) => {
         ESTADO_CUENTA: ESTADO_CUENTA
     };
 }
+const userControllerName = async (NUMERO_CELULAR) =>{
+    const user = await usuarios.findOne({ where: { NUMERO_CELULAR } });
+    return {
+        NOMBRE_USUARIO: user.NOMBRE_USUARIO,
+        NUMERO_CELULAR: user.NUMERO_CELULAR,
+        SALDO: user.SALDO,
+        ESTADO_CUENTA: user.ESTADO_CUENTA
+    };
+}
 
 module.exports = {
     crearUsuario,
     loginController,
     usersListController,
-    editUserController
+    editUserController,
+    userControllerName
 }

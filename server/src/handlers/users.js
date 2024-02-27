@@ -1,4 +1,4 @@
-const { crearUsuario, loginController, usersListController, editUserController } = require("../controller/user")
+const { crearUsuario, loginController, usersListController, editUserController, userControllerName} = require("../controller/user")
 
 const user = async (req, res) => {
     const { NOMBRE_USUARIO, DOCUMENTO, TIPO_DOCUMENTO, NUMERO_CELULAR,
@@ -24,9 +24,17 @@ const login = async (req, res) => {
 }
 
 const usersList = async (req, res) => {
+    const {NUMERO_CELULAR}=req.query
     try {
+
+        if(NUMERO_CELULAR){
+        const result = await userControllerName(NUMERO_CELULAR)
+        res.status(200).json(result)
+        }
+        else{
         const result = await usersListController()
         res.status(200).json(result)
+        }
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
