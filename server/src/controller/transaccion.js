@@ -1,4 +1,5 @@
-const { transacciones, usuarios, conn } = require('../db');
+const { transacciones, usuarios } = require('../db');
+const { Op } = require('sequelize');
 
 const crearTransaccion = async (CUENTA_ORIGEN, CUENTA_DESTINO, VALOR_TRANSACCION) => {
     const validarDestino = await usuarios.findOne({
@@ -48,9 +49,21 @@ const crearTransaccion = async (CUENTA_ORIGEN, CUENTA_DESTINO, VALOR_TRANSACCION
             NUMERO_CELULAR: CUENTA_DESTINO
         },
     });
-
-    
     return newTransaccion;
 };
 
-module.exports = { crearTransaccion };
+const transaccionHistoryController = async (CELULAR) => {
+    {
+        const history = await transacciones.findAll({
+            where: {
+                [Op.or]: [
+                    { CUENTA_ORIGEN: CELULAR },
+                    { CUENTA_DESTINO: CELULAR }
+                ]
+            }
+        });
+        return history
+    }
+}
+
+module.exports = { crearTransaccion, transaccionHistoryController };
