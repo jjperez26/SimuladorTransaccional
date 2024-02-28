@@ -15,133 +15,161 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css"
         integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body class="bg-info d-flex justify-content-center align-items-center">
     <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 35rem">
         <h1>Registro de Usuario</h1>
-        <form action="?" method="post">
-            <div class="mb-4">
-                <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control bg-light" id="nombre" name="nombre" required />
+            <form action="?" method="post" id="formulario">
+                <div class="row">
+                    <div class="mb-4 col form__grupo">
+                        <div id="grupo__nombre">
+                            <label for="nombre" class="form-label formulario__label">Nombre</label>
+                            <div class="grupo-input">
+                                <input type="text" class="form-control bg-light formulario__input" id="nombre" name="nombre"/>
+                            </div>
+                            <p class="input--error">Solo se admite texto</p>
+                        </div>
+                    </div>
+                    <div class="mb-4 col form__grupo">
+                        <div id="grupo__numeroCelular">
+                            <label for="numeroCelular" class="form-label formulario__label">Número de celular</label>
+                            <div class="grupo-input">
+                                <input type="text" class="form-control bg-light formulario__input" id="numeroCelular" name="numeroCelular" />
+                            </div>
+                            <p class="input--error">Solo se admite valores numéricos, máx. 10 digitos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-4 col form__grupo">
+                        <div id="grupo__tipoDocumento">
+                            <label for="tipoDocumento" class="form-label formulario__label">Tipo de documento</label>
+                                <div class="grupo-input">
+                                    <select class="form-select bg-light formulario__input" onchange="validar_select('tipoDocumento')" id="tipoDocumento" name="tipoDocumento">
+                                        <option value="">Seleccione...</option>
+                                        <option value="1">Cédula</option>
+                                        <option value="2">Tarjeta Identidad</option>
+                                    </select>
+                                </div>
+                                <p class="input--error">Debe seleccionar una opción valida</p>
+                        </div>
+                    </div>
+                    <div class="mb-4 col form__grupo">
+                        <div id="grupo__numeroDocumento">
+                            <label for="numeroDocumento" class="form-label formulario__label">Número de documento</label>
+                            <div class="grupo-input">
+                                <input type="text" class="form-control bg-light formulario__input" id="numeroDocumento" name="numeroDocumento" />
+                            </div>
+                            <p class="input--error">Solo se admite valores numéricos, máx. 15 digitos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-4 col form__grupo">
+                        <div id="grupo__correo">
+                            <label for="correo" class="form-label formulario__label">Correo electrónico</label>
+                            <div class="grupo-input">
+                                <input type="text" class="form-control bg-light formulario__input" id="correo" name="correo">
+                            </div>
+                            <p class="input--error">Solo se admite el formato correo@correo.com</p>
+                        </div>
+                    </div>
+                    <div class="mb-4 col form__grupo">
+                        <div id="grupo__dirección">
+                            <label for="direccion" class="form-label formulario__label">Dirección</label>
+                            <div class="grupo-input">
+                                <input type="text" class="form-control bg-light formulario__input" id="direccion" name="dirección">
+                            </div>
+                            <p class="input--error">Solo se admite texto, números y los caracteres especiales: #-</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-4 col form__grupo">
+                        <div id="grupo__contraseña">
+                            <label for="contraseña" class="form-label formulario__label">Contraseña</label>
+                            <div class="grupo-input">
+                                <input type="password" class="form-control bg-light formulario__input" id="contraseña" name="contraseña">
+                            </div>
+                            <p class="input--error">Debe contener de 4 a 12 caracteres</p>
+                        </div>
+                    </div>
+                    <div class="mb-4 col form__grupo">
+                        <div id="grupo__rcontraseña">
+                            <label for="rcontraseña" class="form-label formulario__label"> Repite la Contraseña</label>
+                            <div class="grupo-input">
+                                <input type="password" class="form-control bg-light formulario__input" id="rcontraseña" name="rcontraseña">
+                            </div>
+                            <p class="input--error">Las contraseñas deben coincidir</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-4 col form__grupo">
+                        <div id="grupo__saldo">
+                            <label for="saldo" class="form-label formulario__label">Saldo</label>
+                            <div class="grupo-input">
+                                <input type="text" class="form-control bg-light formulario__input" id="saldo" name="saldo">
+                            </div>
+                            <p class="input--error">Solo se admite valores numéricos</p>
+                        </div>
+                    </div>
+                    <div class="mb-4 col form__grupo">
+                        <div id="grupo__tipoPerfil">
+                            <label for="tipoPerfil" class="form-label formulario__label">Tipo de Perfil</label>
+                            <div class="grupo-input">
+                                <select class="form-select bg-light formulario__input" onchange="validar_select('tipoPerfil')" id="tipoPerfil" name="tipoPerfil">
+                                    <option value="">Seleccione...</option>
+                                    <option value="Admin">Administrador</option>
+                                    <option value="Usuario">Cliente</option>
+                                </select>
+                            </div>
+                            <p class="input--error">Debe seleccionar una opción valida</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div id="grupo__Estadocuenta">
+                        <label for="Estadocuenta" class="form-label">Estado cuenta</label>
+                        <div class="grupo-input">
+                            <select class="form-select bg-light formulario__input" id="Estadocuenta" onchange="validar_select('Estadocuenta')" name="Estadocuenta">
+                                <option value="">Seleccione...</option>
+                                <option value="true">Activo</option>
+                                <option value="false">Inactivo</option>
+                            </select>
+                        </div>
+                        <p class="input--error">Debe seleccionar una opción valida</p>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm" id="Registrador">Crear
+                    Usuario</button>
+                <div id="form--mensage" style="display: none;">
+                    <div class="form--mensage">
+                        <b><p style="margin: 0"><i class="fas fa-exclamation-triangle"></i><b>Error:</b>Por favor llena los datos correctamente</p></b>
+                     </div>
+                </div>
+            </form>
+            <div class="d-flex gap-1 justify-content-center mt-1">
+                <a href="./login.html" class="text-decoration-none text-info fw-semibold">Cancelar</a>
             </div>
-
-            <div class="mb-4">
-                <label for="tipoDocumento" class="form-label">Tipo de
-                    documento</label>
-                <select class="form-select bg-light" id="tipoDocumento" name="tipoDocumento" required>
-                    <option value>Seleccione...</option>
-                    <option value="1">Cédula</option>
-                    <option value="2">Tarjeta Identidad</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="numeroDocumento" class="form-label">Número de
-                    documento</label>
-                <input type="text" class="form-control bg-light" id="numeroDocumento" name="numeroDocumento" required />
-            </div>
-            <div class="mb-4">
-                <label for="numeroCelular" class="form-label">Número de celular</label>
-                <input type="text" class="form-control bg-light" inputmode="numeric" pattern="\d*" id="numeroCelular" name="numeroCelular" required />
-            </div>
-            <div class="mb-4">
-                <label for="correo" class="form-label">Correo electrónico</label>
-                <input type="email" class="form-control bg-light" id="correo" name="correo" required>
-            </div>
-            <div class="mb-4">
-                <label for="contraseña" class="form-label">Contraseña</label>
-                <input type="password" class="form-control bg-light" id="contraseña" name="contraseña" required>
-            </div>
-            <div class="mb-4">
-                <label for="rcontraseña" class="form-label"> Repite la Contraseña</label>
-                <input type="password" class="form-control bg-light" id="rcontraseña" name="rcontraseña" required>
-            </div>
-            <div class="mb-4">
-                <label for="direccion" class="form-label">Dirección</label>
-                <input type="text" class="form-control bg-light" id="direccion" name="dirección" required>
-            </div>
-            <div class="mb-4">
-                <label for="saldo" class="form-label">Saldo</label>
-                <input type="number" class="form-control bg-light" inputmode="numeric" pattern="\d*" id="saldo" name="saldo" required>
-            </div>
-            <div class="mb-4">
-                <label for="tipoPerfil" class="form-label">Tipo de
-                    Perfil</label>
-                <select class="form-select bg-light" id="tipoPerfil" name="tipoPerfil" required>
-                    <option value>Seleccione...</option>
-                    <option value="Admin">Administrador</option>
-                    <option value="Usuario">Cliente</option>
-                </select>
-            </div>
-
-            <div class="mb-4">
-                <label for="Estadocuenta" class="form-label">Estado cuenta</label>
-                <select class="form-select bg-light" id="Estadocuenta" name="Estadocuenta" required>
-                    <option value>Seleccione...</option>
-                    <option value="true">Activo</option>
-                    <option value="false">Inactivo</option>
-                </select>
-            </div>
-
-
-            <button onclick="registro(event)" class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm">Crear
-                Usuario</button>
-        </form>
-        <div class="d-flex gap-1 justify-content-center mt-1">
-            <a href="./login.html" class="text-decoration-none text-info fw-semibold">Cancelar</a>
-        </div>
     </div>
+    <script src="../js/validador.js"></script>
+    <script src="https://kit.fontawesome.com/b6119dde1c.js" crossorigin="anonymous"></script>
 </body>
-
 <script>
-    function registro(event) {
-        event.preventDefault();
-        var nombre = document.getElementById("nombre").value
-        var tipoDocumento = document.getElementById("tipoDocumento").value
-        var numeroDocumento = document.getElementById("numeroDocumento").value
-        var numeroCelular = document.getElementById("numeroCelular").value
-        var correo = document.getElementById("correo").value
-        var rcontraseña = document.getElementById("rcontraseña").value
-        var direccion = document.getElementById("direccion").value
-        var saldo = document.getElementById("saldo").value
-        var tipoPerfil = document.getElementById("tipoPerfil").value
-        var Estadocuenta = document.getElementById("Estadocuenta").value
-
-
-
-        if (nombre.length < 1) {
-            toastr.error("Debe llenar todos los campos para registrarse");
+    function validar_select(campo){
+        var select = document.getElementById(campo).value
+        if (!select.length < 1){
+            document.getElementById(`grupo__${campo}`).classList.remove('form__grupo-incorrecto');
+            document.getElementById(`grupo__${campo}`).classList.add('form__grupo-correcto');
+            document.querySelector(`#grupo__${campo} .input--error`).classList.remove('input--error-activo');
+        }else{
+            document.getElementById(`grupo__${campo}`).classList.add('form__grupo-incorrecto');
+            document.getElementById(`grupo__${campo}`).classList.remove('form__grupo-correcto');
+            document.querySelector(`#grupo__${campo} .input--error`).classList.add('input--error-activo');
         }
-
-        const formData={
-             NOMBRE_USUARIO : nombre,
-			 DOCUMENTO : numeroDocumento,
-             TIPO_DOCUMENTO : tipoDocumento,
-			 NUMERO_CELULAR : numeroCelular,
-			 CORREO : correo,
-             PASSWORD : rcontraseña,
-             DIRECCION : direccion,
-             SALDO : saldo,
-             ESTADO_CUENTA : Estadocuenta,
-             PERFIL : tipoPerfil
-
-         }   
-
-         fetch('http://localhost:3001/user/crearUsuario', 
-         {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(res => {
-            return res.json();
-        })
-        .then(data => {
-        console.log("Respuesta exitosa", data);
-        })
-             .catch(err => console.log(formData, err))
     }
 
 </script>

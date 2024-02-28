@@ -1,0 +1,42 @@
+.input--error{
+    font-size: 12px;
+    margin-bottom: 0;
+    display: none;
+}
+
+.input--error-activo{
+    color:#F66060;
+    display: block;
+}
+
+.form--mensage{
+    height: 45px;
+    line-height: 45 px;
+    background: #F66060;
+    padding: 10px;
+    border-radius: 3px;
+    color: black;
+    /* display: none; */
+}
+
+/* .form--mensage-activo{
+    display: block;
+} */
+
+/*----ESTILOS DE VALIDACION----*/
+
+.form__grupo-correcto .formulario__label{
+    color: rgb(25, 204, 100);
+}
+
+.form__grupo-correcto .formulario__input{
+    border: 3px rgb(25, 204, 100) solid;
+}
+
+.form__grupo-incorrecto .formulario__label{
+    color: #F66060;
+}
+
+.form__grupo-incorrecto .formulario__input{
+    border: 3px #F66060 solid;
+}
