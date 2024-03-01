@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
         FECHA_TRANSACCION: {
             type: DataTypes.DATE,
             allowNull: true,
-            defaultValue: 0
+            defaultValue: DataTypes.NOW
         },
     }, { timestamps: false });
 };

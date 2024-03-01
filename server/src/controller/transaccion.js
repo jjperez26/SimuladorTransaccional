@@ -62,6 +62,23 @@ const transaccionHistoryController = async (CELULAR) => {
                 ]
             }
         });
+
+        // Mapear el historial de transacciones y determinar si fue enviado o recibido
+        const result = history.map(transaction => {
+            if (transaction.CUENTA_ORIGEN === CELULAR) {
+                return {
+                    TIPO: "Enviado",
+                    ...transaction.toJSON()
+                };
+            } else {
+                return {
+                    TIPO: "Recibido",
+                    ...transaction.toJSON()
+                };
+            }
+        });
+
+        return result;
         return history
     }
 }
