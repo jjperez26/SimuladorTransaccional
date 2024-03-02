@@ -23,7 +23,7 @@ const crearTransaccion = async (CUENTA_ORIGEN, CUENTA_DESTINO, VALOR_TRANSACCION
     }
 
     if (validarSaldo.SALDO < VALOR_TRANSACCION) {
-        throw new Error('El saldo tiene que ser menor a la transacción');
+        throw new Error('La transaccion no puede superar el saldo disponible');
     }
 
     const newTransaccion = await transacciones.create({

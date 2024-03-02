@@ -1,8 +1,7 @@
 const { DataTypes } = require('sequelize');
-// Exportamos una funcion que define el modelo
-// Luego le injectamos la conexion a sequelize.
+const { Sequelize } = require('sequelize');
+
 module.exports = (sequelize) => {
-    // defino el modelo
     sequelize.define('transacciones', {
         ID_TRANSACCION: {
             type: DataTypes.UUID,
@@ -26,7 +25,16 @@ module.exports = (sequelize) => {
         FECHA_TRANSACCION: {
             type: DataTypes.DATE,
             allowNull: true,
-            defaultValue: DataTypes.NOW
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+            get() {
+                const fechaUTC = this.getDataValue('FECHA_TRANSACCION');
+                if (fechaUTC) {
+                    const options = { timeZone: 'America/Bogota', hour12: false };
+                    return fechaUTC.toLocaleString('es-CO', options);
+                } else {
+                    return null;
+                }
+            }
         },
     }, { timestamps: false });
 };
