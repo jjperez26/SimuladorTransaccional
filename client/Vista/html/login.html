@@ -59,12 +59,23 @@
         .then(data => {
             if(data.VALOR!==true){alert('Usuario incorrecto')}
             else{
+                if(data.PERFIL=="Usuario"){
                 if(data.ESTADO_CUENTA===true){
                 localStorage.setItem("usuario",numerocelular )
                 window.open('./home.html?telefono='+numerocelular,"_self")
                 }
                 else{
                 alert('Usuario Inactivo')
+                }
+                }
+                if(data.PERFIL=="Admin"){
+                if(data.ESTADO_CUENTA===true){
+                localStorage.setItem("usuario",numerocelular )
+                window.open('./administrate.html?telefono='+numerocelular,"_self")
+                }
+                else{
+                alert('Usuario Inactivo')
+                }
                 }
             }
             console.log("Respuesta exitosa", data);

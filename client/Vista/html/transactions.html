@@ -14,10 +14,9 @@
                 <div class="d-flex gap-1 justify-content-center mt-3">
                     <a onclick="enviohome()" class=""><img src="../image/login-icon.svg" alt="login-icon" style="height: 3rem"/></a>
                 </div>
-                <div class="d-inline-block text-info gap-1 justify-content-center mt-4" style="font-size: 3rch; width: 3rem; height: 5rem;"></div>
                 <p>N° Cuenta</p>
                 <p id="numerocelular">.</p>
-            </div>1
+            </div>
             <form>
                 <div class="input-group mt-4">
                     <div class="input-group-text bg-info">
@@ -29,25 +28,17 @@
                     <div class="input-group-text bg-info">
                         <img src="../image/money-icon.svg" alt="money-icon" style="height: 2rem" />
                     </div>
-                    <input id="valor" class="form-control bg-light" type="text" inputmode="numeric" pattern="\d*" placeholder="Value" required/>
+                    <input id="valor" class="form-control bg-light" type="text" inputmode="numeric" pattern="\d*" placeholder="Valor" required/>
                 </div>
-                <button  onclick="envio()" class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm">ENVIAR</button>
+                <a onclick="envio()" class="d-flex justify-content-center align-items-center">
+                    <img src="../image/Envio.png" alt="login-icon" style="height: 3rem"/>
+                </a>
+                
             </form>
             <div class="d-flex gap-1 justify-content-center mt-1" style="height: 5rem;">
                 <p>SALDO</p>
                 <p id="saldo">.</p>
                         
-            </div>
-            <div class="d-flex gap-4 justify-content-lg-end mt-2">
-                <div class="d-flex gap-1 justify-content-center mt-4">
-                    <a href="./movemenst.html" class="btn btn-dark text-white w-100 mt-4 fw-semibold shadow-lg">MOVIMIENTOS</a>
-                </div>
-                <div class="d-flex gap-1 justify-content-center mt-4">
-                    <a href="./transactions.html" class="btn btn-dark text-white w-100 mt-4 fw-semibold shadow-lg">HACER TRANSACCIÓN</a>
-                </div>
-                <div class="d-flex gap-1 justify-content-center mt-4">
-                    <a href="./login.html" class="btn btn-danger text-white w-100 mt-4 fw-semibold shadow-lg">CERRAR SESION</a>
-                </div>
             </div>
         </div>
     </body>
@@ -73,32 +64,48 @@
         ////////////////////////////////////////////////////////////////////////////
 
         function envio() {
+
         const numeroenviar = document.getElementById("numeroenviar").value;
         const valor = document.getElementById("valor").value;
         const origen = document.getElementById("numerocelular").innerHTML;
+        const saldo = parseFloat(document.getElementById("saldo").innerText); 
         const valornum = parseInt(valor);
 
-        const formData = {
-        CUENTA_ORIGEN: origen, 
-        CUENTA_DESTINO: numeroenviar, 
-        VALOR_TRANSACCION: valornum
-    };
-        fetch(`http://localhost:3001/transaccion/creartransaccion`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(res => res.json(formData))
-        .then(data => {
-            console.log("Exitoso",formData)
-        })
-        .catch(err => console.error('Error', err));
-    }
-    function enviohome(){
-        window.open('./home.html?numeroCelular='+document.getElementById("numerocelular").textContent,"_self")
+        const regex = /^[1-9]\d*$/;
+
+
+        if (regex.test(valor) ) {
+            if (valornum > saldo) {
+            alert("No puedes enviar un valor mayor que tu saldo actual.");
+        } else {
+            const formData = {
+                CUENTA_ORIGEN: origen, 
+                CUENTA_DESTINO: numeroenviar, 
+                VALOR_TRANSACCION: valornum
+            };
+
+            fetch(`http://localhost:3001/transaccion/creartransaccion`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(res => res.json(formData))
+            .then(data => {
+                window.location.href = `./transactions.html?numeroCelular=${origen}`;
+            })
+            .catch(err => console.error('Error', err));
         }
+    }
+    else {
+        // Mostrar una alerta de error si el valor no es un número entero y positivo
+        alert("Por favor, ingresa un número entero y positivo en el campo 'Valor'.");
+    }
+    }
+        function enviohome(){
+            window.open('./home.html?numeroCelular='+document.getElementById("numerocelular").textContent,"_self")
+            }
 
     
     </script>

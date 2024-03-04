@@ -12,14 +12,15 @@
 </head>
 
 <body class="bg-info d-flex justify-content-center align-items-center vh-100">
-    <div class="bg-white p-5 rounded-2 text-secondary shadow" style="width: 35em">
+    <div class="bg-white p-5 rounded-2 text-secondary shadow" style="width: 70em">
         <div class="d-flex gap-5 justify-content-center mt-4">
             <div class="d-flex gap-1 justify-content-center mt-3">
-                <a href="./home.html" class=""><img src="../image/login-icon.svg" alt="login-icon"
+                <a onclick="enviohome()" class=""><img src="../image/login-icon.svg" alt="login-icon"
                         style="height: 3rem" /></a>
             </div>
             <div class="d-inline-block text-info gap-1 justify-content-center mt-4"
-                style="font-size: 3rch; width: 3rem; height: 5rem;">Cuenta</div>
+                style="font-size: 3rch; width: 3rem; height: 5rem;"></div>
+                <p>Cuenta</p>
                 <p id="numerocelular">.</p>
         </div>
         <div class="bg-white p-5 rounded-5 text-secondary shadow">
@@ -29,6 +30,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <th scope="col"></th>
                             <th scope="col">Tipo</th>
                             <th scope="col">Id</th>
                             <th scope="col">Origen</th>
@@ -68,49 +70,55 @@
 
 
         function historial(){
-            const consulta = document.getElementById("numerocelular").innerHTML;
-            const formData = {
-            CELULAR: consulta
-            }
-        
             
-        fetch('http://localhost:3001/transaccion/historial', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json' 
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(res => {
-                return res.json(formData);
-            })
-            .then(data => {
-                console.log("Respuesta exitosa", data);
-
-                var contenedor = document.getElementById("usuarios");
-                // Crear una variable para almacenar el HTML generado
-                var html = "";
-                
-                // Recorrer el array y generar el HTML para cada elemento
-                for (var i = 0; i < data.length; i++) {
-                    // Agregar el elemento actual al HTML generado
-                    html +="<tr>"
-                    html += "<td></td>";
-                    html += "<td>" + data[i].TIPO + "</td>";
-                    html += "<td>" + data[i].ID_TRANSACCION + "</td>";
-                    html += "<td>" + data[i].CUENTA_ORIGEN + "</td>";
-                    html += "<td>" + data[i].CUENTA_DESTINO + "</td>";
-                    html += "<td>" + data[i].VALOR_TRANSACCION + "</td>";
-                    html += "<td>" + data[i].FECHA_TRANSACCION + "</td>";
-                    // html += "<td>" + users[i].status + "</td>";
-                    html +="</tr>"       
-                }
-    
-                // Insertar el HTML generado en el contenedor
-                contenedor.innerHTML = html;
-            })
-            .catch(err => console.log('Error', err));
+        
+    const consulta = document.getElementById("numerocelular").innerText;
+        const formData = {
+            CELULAR: consulta
         }
+        console.log("consulta", consulta)
+    fetch('http://localhost:3001/transaccion/historial', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(res => {
+            console.log("res", res)
+            return res.json(formData);
+        })
+        .then(data => {
+            console.log("Respuesta exitosa", data);
+
+            var contenedor = document.getElementById("usuarios");
+            // Crear una variable para almacenar el HTML generado
+            var html = "";
+            
+            // Recorrer el array y generar el HTML para cada elemento
+            for (var i = 0; i < data.length; i++) {
+                // Agregar el elemento actual al HTML generado
+                html +="<tr>"
+                html += "<td></td>";
+                html += "<td>" + data[i].TIPO + "</td>";
+                html += "<td>" + data[i].ID_TRANSACCION + "</td>";
+                html += "<td>" + data[i].CUENTA_ORIGEN + "</td>";
+                html += "<td>" + data[i].CUENTA_DESTINO + "</td>";
+                html += "<td>" + data[i].VALOR_TRANSACCION + "</td>";
+                html += "<td>" + data[i].FECHA_TRANSACCION + "</td>";
+                // html += "<td>" + users[i].status + "</td>";
+                html +="</tr>"       
+            }
+
+            // Insertar el HTML generado en el contenedor
+            contenedor.innerHTML = html;
+        })
+        .catch(err => console.log('Error', err));
+    }
+    setTimeout(()=>{historial()}, 3000)
+    function enviohome(){
+            window.open('./home.html?numeroCelular='+document.getElementById("numerocelular").textContent,"_self")
+            }
 
 </script>
 
