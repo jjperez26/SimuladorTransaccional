@@ -20,20 +20,22 @@
             </div>
             <div class="d-flex gap-4 justify-content-lg-end mt-2">
                 <div class="d-flex gap-1 justify-content-center mt-4">
-                    <a href="./movements.html" class="btn btn-dark text-white w-100 mt-4 fw-semibold shadow-lg">MOVIMIENTOS</a>
+                    <a onclick="movimientos()" class="btn btn-dark text-white w-100 mt-4 fw-semibold shadow-lg">MOVIMIENTOS</a>
                 </div>
                 <div class="d-flex gap-1 justify-content-center mt-4">
-                    <a href="./transactions.html" class="btn btn-dark text-white w-100 mt-4 fw-semibold shadow-lg">HACER TRANSACCIÓN</a>
+                    <a onclick="transacion()" class="btn btn-dark text-white w-100 mt-4 fw-semibold shadow-lg">HACER TRANSACCIÓN</a>
                 </div>
                 <div class="d-flex gap-1 justify-content-center mt-4">
                     <a href="./login.html" class="btn btn-danger text-white w-100 mt-4 fw-semibold shadow-lg">CERRAR SESIÓN</a>
                 </div>
+
             </div>
         </div>
     </body>
     <script>
         var numeroTelefonico = window.location.search.split("=")[1];
-        
+
+
         fetch(`http://localhost:3001/user?NUMERO_CELULAR=${numeroTelefonico}`, {
             method: 'GET',
             headers: {
@@ -42,15 +44,20 @@
         })
         .then(res => res.json())
 
-
-
         .then(data => {
+            console.log("Respuesta exitosa "+ data.NUMERO_CELULAR);
             document.getElementById("nombre").innerText = data.NOMBRE_USUARIO;
             document.getElementById("saldo").innerText = data.SALDO;
             document.getElementById("numerocelular").innerText = data.NUMERO_CELULAR;
             document.getElementById("estadocuenta").innerText = data.ESTADO_CUENTA;
-            console.log("Respuesta exitosa", data);
+
         })
         .catch(err => console.error('Error', err));
+        function transacion(){
+            window.open('./transactions.html?numeroCelular='+document.getElementById("numerocelular").textContent,"_self")
+        }
+        function movimientos(){
+            window.open('./movements.html?numeroCelular='+document.getElementById("numerocelular").textContent,"_self")
+        }
     </script>
 </html>
