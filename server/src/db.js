@@ -17,20 +17,22 @@ const sequelize = new Sequelize(
    `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
    {
       logging: false,
-       native: false,
-      
+      native: false,
+
+      timezone: '-05:00',
+
       dialect: 'postgres',
       protocol: 'postgres',
       dialectOptions: {
-         
+
          supportBigNumbers: true,
          ssl: {
-           rejectUnauthorized: false,
+            rejectUnauthorized: false,
          }
-       }
-       
+      }
+
    }
-   
+
 );
 
 modelUser(sequelize)
