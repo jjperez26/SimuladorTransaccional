@@ -1,93 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="icon" type="image/x-icon" href="../image/logo-vt.svg" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Administrate Page</title>
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
-            crossorigin="anonymous" />
-    </head>
-    <body
-        class="bg-info d-flex justify-content-center align-items-center vh-100">
 
-        <div class="bg-white p-5 rounded-5 text-secondary shadow"
-            style="width: 50rem">
-            <div class="text-center fs-5 fw-bold">Simulador de transacciones ||
-                Administrador</div>
-            <form action="./admin.html" method="GET">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">NAMES</th>
-                            <th scope="col">EMAIL</th>
-                            <th scope="col">USER</th>
-                            <th scope="col">ENABLE || DISABLE</th>
-                        </tr>
-                    </thead>
-                    <tbody id="usuarios">
-                    </tbody>
-                </table>
-                <!-- <button class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm">Login</button> -->
-            </form>
-            <div class="d-flex gap-1 justify-content-center mt-1">
-                <a href="./login.html"
-                    class="text-decoration-none btn btn-danger text-white w-100 mt-4 fw-semibold shadow-sm">Log
-                    out</a>
-            </div>
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="../image/logo-vt.svg" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Administrate Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />
+</head>
+
+<body class="bg-info d-flex justify-content-center align-items-center vh-100">
+
+    <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 50rem">
+        <div class="text-center fs-5 fw-bold">Simulador de transacciones ||
+            Administrador</div>
+        <form action="./admin.html" method="GET">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">NOMBRES </th>
+                        <th id="cuenta" scope="col">CUENTA</th>
+                        <th scope="col">SALDO</th>
+                        <th id="estado" scope="col">ESTADO CUENTA</th>
+                    </tr>
+                </thead>
+                <tbody id="usuarios">
+                </tbody>
+            </table>
+            <!-- <button class="btn btn-info text-white w-100 mt-4 fw-semibold shadow-sm">Login</button> -->
+        </form>
+        <div class="d-flex gap-1 justify-content-center mt-1">
+            <a href="./login.html"
+                class="text-decoration-none btn btn-danger text-white w-100 mt-4 fw-semibold shadow-sm">Log
+                out</a>
         </div>
-    </body>
-    <script>
-            fetch('http://localhost:3001/user', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json' 
-                },
-                body: JSON.stringify()
-            })
+    </div>
+</body>
+<script>
+
+    var numeroTelefonico = window.location.search.split("=")[1];
+
+    fetch('http://localhost:3001/user', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify()
+    })
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
+            console.log("Respuesta exitosa", data);
+            const users = [
+            ];
+            var contenedor = document.getElementById("usuarios");
+            // Crear una variable para almacenar el HTML generado
+            var html = "";
+
+            // Recorrer el array y generar el HTML para cada elemento
+            for (var i = 0; i < data.length; i++) {
+                // Agregar el elemento actual al HTML generado
+                html += "<tr>"
+                html += "<td></td>";
+                html += "<td>" + data[i].NOMBRE_USUARIO + "</td>";
+                html += "<td>" + data[i].NUMERO_CELULAR + "</td>";
+                html += "<td>" + data[i].SALDO + "</td>";
+                // html += "<td>" + users[i].status + "</td>";
+                if (data[i].ESTADO_CUENTA) {
+                    html += `<td><a class="text-decoration-none btn btn-info text-white fw-semibold" false onclick="cambiarEstado(${data[i].NUMERO_CELULAR}, false)">Enable</a></td>`
+                } else {
+                    html += `<td><a  class="text-decoration-none btn btn-danger text-white fw-semibold" onclick="cambiarEstado(${data[i].NUMERO_CELULAR}, true)">Disable</a></td>`
+                }
+                html += "</tr>"
+            }
+
+            // Insertar el HTML generado en el contenedor
+            contenedor.innerHTML = html;
+        })
+        .catch(err => console.log('Error', err));
+
+    function cambiarEstado(id, value) {
+
+
+        const formData = {
+            NUMERO_CELULAR: id.toString(),
+            ESTADO_CUENTA: value
+        };
+
+        fetch('http://localhost:3001/user', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
             .then(res => {
                 return res.json();
             })
             .then(data => {
-                console.log("Respuesta exitosa", data);
-                const users = [
-                ];
-                var contenedor = document.getElementById("usuarios");
-                // Crear una variable para almacenar el HTML generado
-                var html = "";
-                
-                // Recorrer el array y generar el HTML para cada elemento
-                for (var i = 0; i < data.length; i++) {
-                    // Agregar el elemento actual al HTML generado
-                    html +="<tr>"
-                    html += "<td></td>";
-                    html += "<td>" + data[i].NOMBRE_USUARIO + "</td>";
-                    html += "<td>" + data[i].NUMERO_CELULAR + "</td>";
-                    html += "<td>" + data[i].SALDO + "</td>";
-                    // html += "<td>" + users[i].status + "</td>";
-                    if(data[i].ESTADO_CUENTA){
-                        html += `<td><a class="text-decoration-none btn btn-info text-white fw-semibold" onclick="habilitar(`+data[i].NUMERO_CELULAR+`)">Enable</a></td>`
-                    }else{
-                        html +=`<td><a  class="text-decoration-none btn btn-danger text-white fw-semibold" onclick="deshabilitar(`+data[i].NUMERO_CELULAR+`)">Disable</a></td>`
-                    }
-                    html +="</tr>"       
-                }
-    
-                // Insertar el HTML generado en el contenedor
-                contenedor.innerHTML = html;
+                window.location.href = `./administrate.html?numeroCelular=${numeroTelefonico}`;
             })
             .catch(err => console.log('Error', err));
+    }
+</script>
 
-            function habilitar(id){
-                console.log("id habilitar", id)
-            }
-            function deshabilitar(id){
-                console.log("desa ", id)
-            }
-    </script>
 </html>
