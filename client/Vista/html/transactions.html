@@ -59,7 +59,9 @@
             document.getElementById("saldo").innerText = data.SALDO;
             document.getElementById("numerocelular").innerText = data.NUMERO_CELULAR;
         })
-        .catch(err => console.error('Error', err));
+        .catch(err => {
+           console.log(err);
+        });
 
         ////////////////////////////////////////////////////////////////////////////
 
@@ -74,7 +76,7 @@
         const regex = /^[1-9]\d*$/;
 
 
-        if (regex.test(valor)) {
+        if (regex.test(valor && numeroenviar)) {
             if (valornum > saldo) {
             alert("No puedes enviar un valor mayor que tu saldo actual.");
         } else {
@@ -83,24 +85,41 @@
                 CUENTA_DESTINO: numeroenviar, 
                 VALOR_TRANSACCION: valornum
             };
-
-            fetch(`http://localhost:3001/transaccion/creartransaccion`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json' 
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(res => res.json(formData))
-            .then(data => {
-                window.location.href = `./transactions.html?numeroCelular=${origen}`;
-            })
-            .catch(err => console.error('Error', err));
+            try {
+                
+                fetch(`http://localhost:3001/transaccion/creartransaccion`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json' 
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(res => res.json(formData) )
+                .then(data => {
+                    if (!data.error) {
+                        alert('transacción exitosa')
+                        window.location.href = `./transactions.html?numeroCelular=${origen}`;
+                    }else{
+                        alert(data.error)
+                    }
+                    // if(data.status){
+                    //     console.log('Aqui está entrando');
+                    // window.location.href = `./transactions.html?numeroCelular=${origen}`;
+                    // }
+                })
+                .catch(err => 
+                console.log('Error ', err)
+                    //console.error('Error', err)
+                    // alert(err.status)
+                );
+            } catch (error) {
+                alert(error.status)
+            }
         }
     }
     else {
         // Mostrar una alerta de error si el valor no es un número entero y positivo
-        alert("Por favor, ingresa un número entero y positivo en el campo 'Valor'.");
+        alert("Por favor, ingresa un número entero y positivo en el campo.");
     }
     }
         function enviohome(){
