@@ -1,63 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="icon" type="image/x-icon" href="../image/logo-vt.svg" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Home Page</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />
-    </head>
-    <body class="bg-info d-flex justify-content-center align-items-center vh-100">
-        <div class="bg-white p-5 rounded-2 text-secondary shadow" style="width: 35em">
-            <div class="d-flex gap-5 justify-content-center mt-4">
-                <div class="d-inline-block text-info gap-1 justify-content-center mt-4" style="font-size: 3rch; width: 3rem; height: 5rem;">Usuario</div>
-                <div class="d-inline-block gap-1 justify-content-center mt-4" style="font-size: 3rch;">
-                    <p id="nombre">Nombre</p>
-                    <p id="saldo">Saldo</p>
-                    <p id="numerocelular">Número de Celular</p>
-                </div>
-            </div>
-            <div class="d-flex gap-4 justify-content-lg-end mt-2">
-                <div class="d-flex gap-1 justify-content-center mt-4">
-                    <a onclick="movimientos()" class="btn btn-dark text-white w-100 mt-4 fw-semibold shadow-lg">MOVIMIENTOS</a>
-                </div>
-                <div class="d-flex gap-1 justify-content-center mt-4">
-                    <a onclick="transacion()" class="btn btn-dark text-white w-100 mt-4 fw-semibold shadow-lg">HACER TRANSACCIÓN</a>
-                </div>
-                <div class="d-flex gap-1 justify-content-center mt-4">
-                    <a href="./login.html" class="btn btn-danger text-white w-100 mt-4 fw-semibold shadow-lg">CERRAR SESIÓN</a>
-                </div>
-
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="../image/logo-vt.svg" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />
+</head>
+<body class="bg-info d-flex justify-content-center align-items-center vh-100">
+    <div class="bg-white p-5 rounded-2 text-secondary shadow" style="width: 35em">
+        <div class="d-flex gap-5 justify-content-center mt-4">
+            <div class="d-inline-block text-info gap-1 justify-content-center mt-4" style="font-size: 3rch; width: 3rem; height: 5rem;">Usuario</div>
+            <div class="d-inline-block gap-1 justify-content-center mt-4" style="font-size: 3rch;">
+                <p id="nombre">Nombre</p>
+                <p id="saldo">Saldo</p>
+                <p id="numerocelular">Número de Celular</p>
             </div>
         </div>
-    </body>
-    <script>
-        var numeroTelefonico = window.location.search.split("=")[1];
+        <div class="d-flex gap-4 justify-content-lg-end mt-2">
+            <div class="d-flex gap-1 justify-content-center mt-4">
+                <a onclick="movimientos()" class="btn btn-dark text-white w-100 mt-4 fw-semibold shadow-lg">MOVIMIENTOS</a>
+            </div>
+            <div class="d-flex gap-1 justify-content-center mt-4">
+                <a onclick="transacion()" class="btn btn-dark text-white w-100 mt-4 fw-semibold shadow-lg">HACER TRANSACCIÓN</a>
+            </div>
+            <div class="d-flex gap-1 justify-content-center mt-4">
+                <button onclick="cerrarSesion()" class="btn btn-danger text-white w-100 mt-4 fw-semibold shadow-lg">CERRAR SESIÓN</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // Función para establecer una cookie
+    function setCookie(cookieName, cookieValue, expirationDays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+    }
 
-
-        fetch(`http://localhost:3001/user?NUMERO_CELULAR=${numeroTelefonico}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json' 
+    // Función para obtener el valor de una cookie
+    function getCookie(cookieName) {
+        var name = cookieName + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var cookieArray = decodedCookie.split(';');
+        for(var i = 0; i < cookieArray.length; i++) {
+            var cookie = cookieArray[i];
+            while (cookie.charAt(0) == ' ') {
+                cookie = cookie.substring(1);
             }
-        })
-        .then(res => res.json())
-
-        .then(data => {
-            console.log("Respuesta exitosa "+ data.NUMERO_CELULAR);
-            document.getElementById("nombre").innerText = data.NOMBRE_USUARIO;
-            document.getElementById("saldo").innerText = data.SALDO;
-            document.getElementById("numerocelular").innerText = data.NUMERO_CELULAR;
-            document.getElementById("estadocuenta").innerText = data.ESTADO_CUENTA;
-
-        })
-        .catch(err => console.error('Error', err));
-        function transacion(){
-            window.open('./transactions.html?numeroCelular='+document.getElementById("numerocelular").textContent,"_self")
+            if (cookie.indexOf(name) == 0) {
+                return cookie.substring(name.length, cookie.length);
+            }
         }
-        function movimientos(){
-            window.open('./movements.html?numeroCelular='+document.getElementById("numerocelular").textContent,"_self")
+        return "";
+    }
+
+    // Función para eliminar una cookie
+    function deleteCookie(cookieName) {
+        document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+
+    var numeroTelefonico = window.location.search.split("=")[1];
+
+    fetch(`http://localhost:3001/user?NUMERO_CELULAR=${numeroTelefonico}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json' 
         }
-    </script>
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("Respuesta exitosa "+ data.NUMERO_CELULAR);
+        document.getElementById("nombre").innerText = data.NOMBRE_USUARIO;
+        document.getElementById("saldo").innerText = data.SALDO;
+        document.getElementById("numerocelular").innerText = data.NUMERO_CELULAR;
+        document.getElementById("estadocuenta").innerText = data.ESTADO_CUENTA;
+    })
+    .catch(err => console.error('Error', err));
+
+    function transacion() {
+        window.open('./transactions.html?numeroCelular='+document.getElementById("numerocelular").textContent,"_self")
+    }
+
+    function movimientos() {
+        window.open('./movements.html?numeroCelular='+document.getElementById("numerocelular").textContent,"_self")
+    }
+
+    function cerrarSesion() {
+        deleteCookie("session_cookie");
+        window.location.href = "./login.html";
+    }
+</script>
+
 </html>

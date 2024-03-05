@@ -10,7 +10,7 @@ const expresiones = {
     dirección: /^[a-zA-Z0-9.#\s-]{1,30}$/, // Letras, numeros y numeral
     contraseña: /^.{4,12}$/, // 4 a 12 digitos.
     rcontraseña: /^.{4,12}$/, // 4 a 12 digitos.
-    saldo: /^.{1,12}$/, // 4 a 12 digitos.
+    saldo: /^\d*\.?\d+$/, // 4 a 12 digitos.
     tipoPerfil: /^[a-zA-Z]{1,10}$/, // Letras.
     Estadocuenta: /^[a-zA-Z]{1,40}$/, // Letras.
 }
@@ -157,7 +157,8 @@ formulario.addEventListener('submit', (e) => {
         registro(e)
         try {
             alert("Usuario registrado")
-            location.reload();
+            //location.reload();
+            window.location.href = `./Registrer.html?numeroCelular=${numeroTelefonico}`;
         } catch (error) {
             console.log("Error")
         }

@@ -121,7 +121,7 @@
                             <div class="grupo-input">
                                 <input type="text" class="form-control bg-light formulario__input" id="saldo" name="saldo">
                             </div>
-                            <p class="input--error">Solo se admite valores numéricos</p>
+                            <p class="input--error">Solo se admite valores numericos y positivos</p>
                         </div>
                     </div>
                     <div class="mb-4 col form__grupo">
@@ -172,6 +172,7 @@
 
     function validar_select(campo){
         var select = document.getElementById(campo).value
+       
         if (!select.length < 1){
             document.getElementById(`grupo__${campo}`).classList.remove('form__grupo-incorrecto');
             document.getElementById(`grupo__${campo}`).classList.add('form__grupo-correcto');
@@ -180,6 +181,7 @@
             document.getElementById(`grupo__${campo}`).classList.add('form__grupo-incorrecto');
             document.getElementById(`grupo__${campo}`).classList.remove('form__grupo-correcto');
             document.querySelector(`#grupo__${campo} .input--error`).classList.add('input--error-activo');
+
         }
     }
 
