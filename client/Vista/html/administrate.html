@@ -14,9 +14,10 @@
 <body class="bg-info d-flex justify-content-center align-items-center vh-100">
 
     <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 50rem">
-        <div class="text-center fs-5 fw-bold">Simulador de transacciones ||
-            Administrador
-            <a href="./Registrer.html" class="text-decoration-none text-info fw-semibold">Register</a>
+        <div class="text-center fs-5 fw-bold">Administrador ||
+            <a onclick="envioregistro()"  class="text-decoration-none text-info fw-semibold">Registar usuario</a>
+            ||
+            <a onclick="enviomovimiento()" class="text-decoration-none text-info fw-semibold">Movimientos usuarios</a>
         </div>
             
         <form action="./admin.html" method="GET">
@@ -37,8 +38,7 @@
         </form>
         <div class="d-flex gap-1 justify-content-center mt-1">
             <a href="./login.html"
-                class="text-decoration-none btn btn-danger text-white w-100 mt-4 fw-semibold shadow-sm">Log
-                out</a>
+                class="text-decoration-none btn btn-danger text-white w-100 mt-4 fw-semibold shadow-sm">SALIR</a>
         </div>
     </div>
 </body>
@@ -109,6 +109,12 @@
             })
             .catch(err => console.log('Error', err));
     }
+    function enviomovimiento() {
+    window.location.href = `./movementsAdmin.html?numeroCelular=${numeroTelefonico}`;
+}
+    function envioregistro() {
+    window.location.href = `./Registrer.html?numeroCelular=${numeroTelefonico}`;
+}
 </script>
 
 </html>

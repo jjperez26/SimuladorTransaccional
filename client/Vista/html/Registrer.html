@@ -19,7 +19,15 @@
 </head>
 
 <body class="bg-info d-flex justify-content-center align-items-center">
+    
     <div class="bg-white p-5 rounded-5 text-secondary shadow" style="width: 35rem">
+
+        <div class="d-flex gap-1 justify-content-center mt-3">
+            <a onclick="enviohome()" class=""><img src="../image/login-icon.svg" alt="login-icon"
+                    style="height: 3rem" /></a>
+                    
+        </div>
+
         <h1>Registro de Usuario</h1>
             <form action="?" method="post" id="formulario">
                 <div class="row">
@@ -159,6 +167,9 @@
     <script src="https://kit.fontawesome.com/b6119dde1c.js" crossorigin="anonymous"></script>
 </body>
 <script>
+
+    var numeroTelefonico = window.location.search.split("=")[1];
+
     function validar_select(campo){
         var select = document.getElementById(campo).value
         if (!select.length < 1){
@@ -171,6 +182,10 @@
             document.querySelector(`#grupo__${campo} .input--error`).classList.add('input--error-activo');
         }
     }
+
+    function enviohome() {
+        window.location.href = `./administrate.html?numeroCelular=${numeroTelefonico}`;
+}
 
 </script>
 
