@@ -72,20 +72,8 @@
                         }
                         if (data.PERFIL == "Admin") {
                             if (data.ESTADO_CUENTA === true) {
-
-
-
-                                const opcion = prompt("Por favor, ingresa 1 para ingresar como admin o 2 para ingresar como usuario:");
-
-                            if (opcion === "1") {
-                                localStorage.setItem("usuario", numerocelular)
-                                window.open('./administrate.html?telefono=' + numerocelular, "_self")
-                            } else if (opcion === "2") {
-                                localStorage.setItem("usuario", numerocelular)
-                                window.open('./home.html?telefono=' + numerocelular, "_self")
-                            } else {
-                                alert("Opción inválida");
-                            }
+                                 localStorage.setItem("usuario", numerocelular)
+                                window.open('./loginadmin.html?telefono=' + numerocelular, "_self")
                             }
                             else {
                                 alert('Usuario Inactivo')
