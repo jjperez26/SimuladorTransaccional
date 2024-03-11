@@ -84,7 +84,14 @@
                 })
                 .catch(err => console.log('Error', err));
     }
-    module.exports = { numerocelular }
+
+    // Verificar si el usuario ya ha iniciado sesión antes de redirigirlo a la página de inicio
+    window.onload = function() {
+        var usuario = localStorage.getItem("usuario");
+        if (usuario) {
+            window.location.href = './home.html?telefono=' + usuario;
+        }
+    };
 </script>
 
 </html>
